@@ -1,6 +1,7 @@
 package com.demo.action;
 
 import org.elasticsearch.action.support.nodes.NodeOperationResponse;
+import org.elasticsearch.cluster.node.DiscoveryNode;
 import org.elasticsearch.common.io.stream.StreamInput;
 import org.elasticsearch.common.io.stream.StreamOutput;
 
@@ -24,7 +25,12 @@ public class HeroInfo extends NodeOperationResponse {
 
     }
 
-    public HeroInfo(String localIp) {
+    public HeroInfo(DiscoveryNode node) {
+        super(node);
+    }
+
+    public HeroInfo(String localIp, DiscoveryNode node) {
+        super(node);
         this.localIp = localIp;
     }
 

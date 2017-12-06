@@ -79,7 +79,7 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
             localIp = "0.0.0.0";
         }
 
-        return new HeroInfo(localIp);
+        return new HeroInfo(localIp, clusterService.localNode());
     }
 
     @Override
