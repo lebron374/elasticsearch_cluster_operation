@@ -13,6 +13,17 @@ public class HeroRequestBuilder extends NodesOperationRequestBuilder<HeroRequest
         super(client, new HeroRequest());
     }
 
+    public HeroRequestBuilder setName(String name) {
+        this.request.setName(name);
+
+        return this;
+    }
+
+    public HeroRequestBuilder setSex(String sex) {
+        this.request.setSex(sex);
+
+        return this;
+    }
 
     @Override
     protected void doExecute(ActionListener<HeroResponse> listener) {

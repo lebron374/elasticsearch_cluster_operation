@@ -7,6 +7,7 @@ import com.demo.action.HeroResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.rest.BaseRestHandler;
 import org.elasticsearch.rest.BytesRestResponse;
 import org.elasticsearch.rest.RestChannel;
@@ -17,6 +18,7 @@ import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.rest.action.support.RestToXContentListener;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by zhi.wang on 2017/12/6.
@@ -38,7 +40,11 @@ public class RestHeroAction extends BaseRestHandler {
 
         public void handleRequest(RestRequest request, RestChannel channel) throws Exception {
             try {
-                HeroRequestBuilder heroRequestBuilder = new HeroRequestBuilder(client.admin().cluster());
+
+                String name = request.param("name");
+                String sex = request.param("sex");
+
+                HeroRequestBuilder heroRequestBuilder = new HeroRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
                 HeroRequest heroRequest = heroRequestBuilder.request();
                 client.admin().cluster().execute(HeroAction.INSTANCE, heroRequest, new RestToXContentListener<HeroResponse>(channel));
             } catch (Throwable ex) {

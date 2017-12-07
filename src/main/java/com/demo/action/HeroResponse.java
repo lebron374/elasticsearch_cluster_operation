@@ -7,6 +7,7 @@ import org.elasticsearch.common.io.stream.StreamInput;
 import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentHelper;
 
 import java.io.IOException;
 
@@ -14,16 +15,6 @@ import java.io.IOException;
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroResponse extends NodesOperationResponse<HeroInfo> implements ToXContent {
-
-    private String localIp;
-
-    public String getLocalIp() {
-        return localIp;
-    }
-
-    public void setLocalIp(String localIp) {
-        this.localIp = localIp;
-    }
 
     HeroResponse() {
     }
@@ -56,7 +47,14 @@ public class HeroResponse extends NodesOperationResponse<HeroInfo> implements To
         builder.startObject("nodes");
         for (HeroInfo heroInfo : nodes) {
 
+            builder.startObject(heroInfo.getNode().getId(), XContentBuilder.FieldCaseConversion.NONE);
+
             builder.field("localIp", heroInfo.getLocalIp(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("name", heroInfo.getName(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("sex", heroInfo.getSex(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("uuid", heroInfo.getUuid(), XContentBuilder.FieldCaseConversion.NONE);
+
+            builder.endObject();
 
         }
         builder.endObject();

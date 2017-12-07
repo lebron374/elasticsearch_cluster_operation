@@ -11,13 +11,41 @@ import java.io.IOException;
  */
 public class HeroRequest extends NodesOperationRequest<HeroRequest> {
 
+    private String name;
+    private String sex;
+
+    public HeroRequest setName(String name) {
+        this.name = name;
+
+        return this;
+    }
+
+    public HeroRequest setSex(String sex) {
+        this.sex = sex;
+
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
     @Override
     public void readFrom(StreamInput in) throws IOException {
         super.readFrom(in);
+        this.name = in.readString();
+        this.sex = in.readString();
     }
 
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
+
+        out.writeString(this.name);
+        out.writeString(this.sex);
     }
 }

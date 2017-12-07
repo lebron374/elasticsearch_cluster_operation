@@ -12,26 +12,36 @@ import java.io.IOException;
  */
 public class HeroInfo extends NodeOperationResponse {
     private String localIp;
+    private String name;
+    private String sex;
+    private String uuid;
 
     public String getLocalIp() {
         return localIp;
     }
 
-    public void setLocalIp(String localIp) {
-        this.localIp = localIp;
+    public String getName() {
+        return name;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     HeroInfo() {
 
     }
 
-    public HeroInfo(DiscoveryNode node) {
-        super(node);
-    }
-
-    public HeroInfo(String localIp, DiscoveryNode node) {
+    public HeroInfo(String localIp, String name, String sex, String uuid, DiscoveryNode node) {
         super(node);
         this.localIp = localIp;
+        this.name = name;
+        this.sex = sex;
+        this.uuid = uuid;
     }
 
     @Override
@@ -39,12 +49,18 @@ public class HeroInfo extends NodeOperationResponse {
         super.readFrom(in);
 
         this.localIp = in.readString();
+        this.name = in.readString();
+        this.sex = in.readString();
+        this.uuid = in.readString();
     }
 
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
         out.writeString(this.localIp);
+        out.writeString(this.name);
+        out.writeString(this.sex);
+        out.writeString(this.uuid);
     }
 
     public static HeroInfo readHeroInfo(StreamInput in) throws IOException {

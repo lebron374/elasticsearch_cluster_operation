@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
@@ -79,7 +80,9 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
             localIp = "0.0.0.0";
         }
 
-        return new HeroInfo(localIp, clusterService.localNode());
+        String uuid = UUID.randomUUID().toString();
+
+        return new HeroInfo(localIp, request.getRequest().getName(), request.getRequest().getSex(), uuid,  clusterService.localNode());
     }
 
     @Override
@@ -88,12 +91,16 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
     }
 
     static class HeroOperationRequest extends NodeOperationRequest {
+        private HeroRequest request;
+
         private HeroOperationRequest() {
 
         }
 
         private HeroOperationRequest(String nodeId, HeroRequest request) {
             super(request, nodeId);
+
+            this.request = request;
         }
 
         @Override
@@ -104,6 +111,10 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
         @Override
         public void writeTo(StreamOutput out) throws IOException {
             super.writeTo(out);
+        }
+
+        public HeroRequest getRequest() {
+            return this.request;
         }
     }
 }
