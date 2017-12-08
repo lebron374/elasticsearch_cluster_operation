@@ -1,17 +1,16 @@
 package com.demo.action;
 
-import org.elasticsearch.action.admin.cluster.node.stats.NodeStats;
 import org.elasticsearch.action.support.nodes.NodesOperationResponse;
 import org.elasticsearch.cluster.ClusterName;
 import org.elasticsearch.common.io.stream.StreamInput;
 import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentHelper;
 
 import java.io.IOException;
 
 /**
+ * 负责在cluster模式下协调节点从各个节点读取数据
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroResponse extends NodesOperationResponse<HeroInfo> implements ToXContent {
@@ -42,6 +41,13 @@ public class HeroResponse extends NodesOperationResponse<HeroInfo> implements To
         super(clusterName, nodes);
     }
 
+    /**
+     * 负责组装返回的数据
+     * @param builder
+     * @param params
+     * @return
+     * @throws IOException
+     */
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
         builder.field("cluster_name", getClusterName().value(), XContentBuilder.FieldCaseConversion.NONE);
         builder.startObject("nodes");
@@ -58,6 +64,7 @@ public class HeroResponse extends NodesOperationResponse<HeroInfo> implements To
 
         }
         builder.endObject();
+
         return builder;
     }
 }

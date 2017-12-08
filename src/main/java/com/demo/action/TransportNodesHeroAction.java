@@ -21,6 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 /**
+ * 在cluster模式下真正的执行部分
  * Created by zhi.wang on 2017/12/6.
  */
 public class TransportNodesHeroAction extends TransportNodesOperationAction<HeroRequest, HeroResponse, TransportNodesHeroAction.HeroOperationRequest, HeroInfo> {
@@ -71,6 +72,12 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
         return new HeroInfo();
     }
 
+    /**
+     * 执行节点真正执行任务的位置
+     * @param request
+     * @return
+     * @throws ElasticsearchException
+     */
     @Override
     protected HeroInfo nodeOperation(HeroOperationRequest request) throws ElasticsearchException {
         String localIp = null;
@@ -90,6 +97,9 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
         return false;
     }
 
+    /**
+     * 内部类，功能需要进一步梳理
+     */
     static class HeroOperationRequest extends NodeOperationRequest {
         private HeroRequest request;
 

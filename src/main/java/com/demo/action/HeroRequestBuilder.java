@@ -5,6 +5,8 @@ import org.elasticsearch.action.support.nodes.NodesOperationRequestBuilder;
 import org.elasticsearch.client.ClusterAdminClient;
 
 /**
+ * 负责在cluster模式下对request的包装,内部使用到了所谓的builder的设计模式
+ * 具体使用逻辑有待验证
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroRequestBuilder extends NodesOperationRequestBuilder<HeroRequest, HeroResponse, HeroRequestBuilder> {

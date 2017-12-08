@@ -7,6 +7,7 @@ import org.elasticsearch.common.io.stream.StreamOutput;
 import java.io.IOException;
 
 /**
+ * 协调节点往执行节点发送的请求
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroRequest extends NodesOperationRequest<HeroRequest> {
@@ -34,6 +35,11 @@ public class HeroRequest extends NodesOperationRequest<HeroRequest> {
         return sex;
     }
 
+    /**
+     * 用于执行节点接收请求参数
+     * @param in
+     * @throws IOException
+     */
     @Override
     public void readFrom(StreamInput in) throws IOException {
         super.readFrom(in);
@@ -41,6 +47,11 @@ public class HeroRequest extends NodesOperationRequest<HeroRequest> {
         this.sex = in.readString();
     }
 
+    /**
+     * 用于协调节点发送请求参数
+     * @param out
+     * @throws IOException
+     */
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);

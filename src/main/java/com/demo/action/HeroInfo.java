@@ -8,6 +8,8 @@ import org.elasticsearch.common.io.stream.StreamOutput;
 import java.io.IOException;
 
 /**
+ * 负责在cluster模式下搭建实际数据存储对象
+ * 需要实现readFrom/writeTo核心接口，猜测是用于传输序列化的时候使用
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroInfo extends NodeOperationResponse {
@@ -44,6 +46,11 @@ public class HeroInfo extends NodeOperationResponse {
         this.uuid = uuid;
     }
 
+    /**
+     * 猜测协调节点接收数据
+     * @param in
+     * @throws IOException
+     */
     @Override
     public void readFrom(StreamInput in) throws IOException {
         super.readFrom(in);
@@ -54,6 +61,11 @@ public class HeroInfo extends NodeOperationResponse {
         this.uuid = in.readString();
     }
 
+    /**
+     * 测试执行节点发送数据
+     * @param out
+     * @throws IOException
+     */
     @Override
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
