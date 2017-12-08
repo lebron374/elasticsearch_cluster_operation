@@ -13,17 +13,17 @@ import java.io.IOException;
  * 负责在cluster模式下整个集群的response数据
  * Created by zhi.wang on 2017/12/6.
  */
-public class HeroResponse extends NodesOperationResponse<HeroInfo> implements ToXContent {
+public class HeroNodesResponse extends NodesOperationResponse<HeroNodeResponse> implements ToXContent {
 
-    HeroResponse() {
+    HeroNodesResponse() {
     }
 
     @Override
     public void readFrom(StreamInput in) throws IOException {
         super.readFrom(in);
-        nodes = new HeroInfo[in.readVInt()];
+        nodes = new HeroNodeResponse[in.readVInt()];
         for (int i = 0; i < nodes.length; i++) {
-            nodes[i] = HeroInfo.readHeroInfo(in);
+            nodes[i] = HeroNodeResponse.readHeroInfo(in);
         }
     }
 
@@ -31,12 +31,12 @@ public class HeroResponse extends NodesOperationResponse<HeroInfo> implements To
     public void writeTo(StreamOutput out) throws IOException {
         super.writeTo(out);
         out.writeVInt(nodes.length);
-        for (HeroInfo node : nodes) {
+        for (HeroNodeResponse node : nodes) {
             node.writeTo(out);
         }
     }
 
-    public HeroResponse(ClusterName clusterName, HeroInfo[] nodes) {
+    public HeroNodesResponse(ClusterName clusterName, HeroNodeResponse[] nodes) {
         super(clusterName, nodes);
     }
 
@@ -50,14 +50,14 @@ public class HeroResponse extends NodesOperationResponse<HeroInfo> implements To
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
         builder.field("cluster_name", getClusterName().value(), XContentBuilder.FieldCaseConversion.NONE);
         builder.startObject("nodes");
-        for (HeroInfo heroInfo : nodes) {
+        for (HeroNodeResponse heroNodeResponseInfo : nodes) {
 
-            builder.startObject(heroInfo.getNode().getId(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.startObject(heroNodeResponseInfo.getNode().getId(), XContentBuilder.FieldCaseConversion.NONE);
 
-            builder.field("localIp", heroInfo.getLocalIp(), XContentBuilder.FieldCaseConversion.NONE);
-            builder.field("name", heroInfo.getName(), XContentBuilder.FieldCaseConversion.NONE);
-            builder.field("sex", heroInfo.getSex(), XContentBuilder.FieldCaseConversion.NONE);
-            builder.field("uuid", heroInfo.getUuid(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("localIp", heroNodeResponseInfo.getLocalIp(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("name", heroNodeResponseInfo.getName(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("sex", heroNodeResponseInfo.getSex(), XContentBuilder.FieldCaseConversion.NONE);
+            builder.field("uuid", heroNodeResponseInfo.getUuid(), XContentBuilder.FieldCaseConversion.NONE);
 
             builder.endObject();
 

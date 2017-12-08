@@ -4,10 +4,10 @@ import org.elasticsearch.action.admin.cluster.ClusterAction;
 import org.elasticsearch.client.ClusterAdminClient;
 
 /**
- * 负责cluster下Action的包装
+ * 负责向ES注册Action和对应的TransportNodesHeroAction的关系
  * Created by zhi.wang on 2017/12/6.
  */
-public class HeroAction extends ClusterAction<HeroRequest, HeroResponse, HeroRequestBuilder> {
+public class HeroAction extends ClusterAction<HeroNodesRequest, HeroNodesResponse, HeroNodesRequestBuilder> {
 
     public static final HeroAction INSTANCE = new HeroAction();
     public static final String NAME = "com.demo.hero";
@@ -23,8 +23,8 @@ public class HeroAction extends ClusterAction<HeroRequest, HeroResponse, HeroReq
      * @return
      */
     @Override
-    public HeroRequestBuilder newRequestBuilder(ClusterAdminClient client) {
-        return new HeroRequestBuilder(client);
+    public HeroNodesRequestBuilder newRequestBuilder(ClusterAdminClient client) {
+        return new HeroNodesRequestBuilder(client);
     }
 
     /**
@@ -32,7 +32,7 @@ public class HeroAction extends ClusterAction<HeroRequest, HeroResponse, HeroReq
      * @return
      */
     @Override
-    public HeroResponse newResponse() {
-        return new HeroResponse();
+    public HeroNodesResponse newResponse() {
+        return new HeroNodesResponse();
     }
 }

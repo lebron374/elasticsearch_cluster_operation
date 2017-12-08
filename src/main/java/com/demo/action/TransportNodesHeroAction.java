@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReferenceArray;
  * 在cluster模式下真正的执行部分
  * Created by zhi.wang on 2017/12/6.
  */
-public class TransportNodesHeroAction extends TransportNodesOperationAction<HeroRequest, HeroResponse, TransportNodesHeroAction.HeroOperationRequest, HeroInfo> {
+public class TransportNodesHeroAction extends TransportNodesOperationAction<HeroNodesRequest, HeroNodesResponse, TransportNodesHeroAction.HeroOperationRequest, HeroNodeResponse> {
 
 
     @Inject
@@ -39,22 +39,22 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
     }
 
     @Override
-    protected HeroRequest newRequest() {
-        return new HeroRequest();
+    protected HeroNodesRequest newRequest() {
+        return new HeroNodesRequest();
     }
 
     @Override
-    protected HeroResponse newResponse(HeroRequest request, AtomicReferenceArray nodesResponses) {
+    protected HeroNodesResponse newResponse(HeroNodesRequest request, AtomicReferenceArray nodesResponses) {
 
-        final List<HeroInfo> heroInfos = new ArrayList<>();
+        final List<HeroNodeResponse> heroNodeResponseInfos = new ArrayList<>();
         for (int i=0; i<nodesResponses.length(); i++) {
             Object resp = nodesResponses.get(i);
-            if (resp instanceof HeroInfo) {
-                heroInfos.add((HeroInfo) resp);
+            if (resp instanceof HeroNodeResponse) {
+                heroNodeResponseInfos.add((HeroNodeResponse) resp);
             }
         }
 
-        return new HeroResponse(clusterName, heroInfos.toArray(new HeroInfo[heroInfos.size()]));
+        return new HeroNodesResponse(clusterName, heroNodeResponseInfos.toArray(new HeroNodeResponse[heroNodeResponseInfos.size()]));
     }
 
     @Override
@@ -63,13 +63,13 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
     }
 
     @Override
-    protected HeroOperationRequest newNodeRequest(String nodeId, HeroRequest request) {
+    protected HeroOperationRequest newNodeRequest(String nodeId, HeroNodesRequest request) {
         return new HeroOperationRequest(nodeId, request);
     }
 
     @Override
-    protected HeroInfo newNodeResponse() {
-        return new HeroInfo();
+    protected HeroNodeResponse newNodeResponse() {
+        return new HeroNodeResponse();
     }
 
     /**
@@ -79,7 +79,7 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
      * @throws ElasticsearchException
      */
     @Override
-    protected HeroInfo nodeOperation(HeroOperationRequest request) throws ElasticsearchException {
+    protected HeroNodeResponse nodeOperation(HeroOperationRequest request) throws ElasticsearchException {
         String localIp = null;
         try {
             localIp = InetAddress.getLocalHost().getHostAddress();
@@ -89,7 +89,7 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
 
         String uuid = UUID.randomUUID().toString();
 
-        return new HeroInfo(localIp, request.getRequest().getName(), request.getRequest().getSex(), uuid,  clusterService.localNode());
+        return new HeroNodeResponse(localIp, request.getRequest().getName(), request.getRequest().getSex(), uuid,  clusterService.localNode());
     }
 
     @Override
@@ -101,13 +101,13 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
      * 内部类，具体作用不明确，目前看只是针对HeroRequest进行了一层封装而已
      */
     static class HeroOperationRequest extends NodeOperationRequest {
-        private HeroRequest request;
+        private HeroNodesRequest request;
 
         private HeroOperationRequest() {
 
         }
 
-        private HeroOperationRequest(String nodeId, HeroRequest request) {
+        private HeroOperationRequest(String nodeId, HeroNodesRequest request) {
             super(request, nodeId);
 
             this.request = request;
@@ -123,7 +123,7 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
             super.writeTo(out);
         }
 
-        public HeroRequest getRequest() {
+        public HeroNodesRequest getRequest() {
             return this.request;
         }
     }

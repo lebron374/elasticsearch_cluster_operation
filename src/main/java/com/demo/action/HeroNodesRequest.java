@@ -10,18 +10,18 @@ import java.io.IOException;
  * 负责在cluster模式下整个集群的request数据
  * Created by zhi.wang on 2017/12/6.
  */
-public class HeroRequest extends NodesOperationRequest<HeroRequest> {
+public class HeroNodesRequest extends NodesOperationRequest<HeroNodesRequest> {
 
     private String name;
     private String sex;
 
-    public HeroRequest setName(String name) {
+    public HeroNodesRequest setName(String name) {
         this.name = name;
 
         return this;
     }
 
-    public HeroRequest setSex(String sex) {
+    public HeroNodesRequest setSex(String sex) {
         this.sex = sex;
 
         return this;

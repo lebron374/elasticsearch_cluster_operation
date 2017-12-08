@@ -12,7 +12,7 @@ import java.io.IOException;
  * 需要实现readFrom/writeTo核心接口，猜测是用于传输序列化的时候使用
  * Created by zhi.wang on 2017/12/6.
  */
-public class HeroInfo extends NodeOperationResponse {
+public class HeroNodeResponse extends NodeOperationResponse {
     private String localIp;
     private String name;
     private String sex;
@@ -34,11 +34,11 @@ public class HeroInfo extends NodeOperationResponse {
         return uuid;
     }
 
-    HeroInfo() {
+    HeroNodeResponse() {
 
     }
 
-    public HeroInfo(String localIp, String name, String sex, String uuid, DiscoveryNode node) {
+    public HeroNodeResponse(String localIp, String name, String sex, String uuid, DiscoveryNode node) {
         super(node);
         this.localIp = localIp;
         this.name = name;
@@ -75,10 +75,10 @@ public class HeroInfo extends NodeOperationResponse {
         out.writeString(this.uuid);
     }
 
-    public static HeroInfo readHeroInfo(StreamInput in) throws IOException {
-        HeroInfo heroInfo = new HeroInfo();
-        heroInfo.readFrom(in);
+    public static HeroNodeResponse readHeroInfo(StreamInput in) throws IOException {
+        HeroNodeResponse heroNodeResponseInfo = new HeroNodeResponse();
+        heroNodeResponseInfo.readFrom(in);
 
-        return heroInfo;
+        return heroNodeResponseInfo;
     }
 }

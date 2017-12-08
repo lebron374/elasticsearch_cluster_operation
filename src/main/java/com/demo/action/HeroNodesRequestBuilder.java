@@ -9,26 +9,26 @@ import org.elasticsearch.client.ClusterAdminClient;
  * 具体使用逻辑有待验证
  * Created by zhi.wang on 2017/12/6.
  */
-public class HeroRequestBuilder extends NodesOperationRequestBuilder<HeroRequest, HeroResponse, HeroRequestBuilder> {
+public class HeroNodesRequestBuilder extends NodesOperationRequestBuilder<HeroNodesRequest, HeroNodesResponse, HeroNodesRequestBuilder> {
 
-    public HeroRequestBuilder(ClusterAdminClient client) {
-        super(client, new HeroRequest());
+    public HeroNodesRequestBuilder(ClusterAdminClient client) {
+        super(client, new HeroNodesRequest());
     }
 
-    public HeroRequestBuilder setName(String name) {
+    public HeroNodesRequestBuilder setName(String name) {
         this.request.setName(name);
 
         return this;
     }
 
-    public HeroRequestBuilder setSex(String sex) {
+    public HeroNodesRequestBuilder setSex(String sex) {
         this.request.setSex(sex);
 
         return this;
     }
 
     @Override
-    protected void doExecute(ActionListener<HeroResponse> listener) {
+    protected void doExecute(ActionListener<HeroNodesResponse> listener) {
 
     }
 }

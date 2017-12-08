@@ -1,7 +1,7 @@
 # 执行过程分析
 # 步骤一：
     执行rest对应的接口，关注RestToXContentListener这个类组装返回结果
-    RestHeroAction->GET [client.admin().cluster().execute(HeroAction.INSTANCE, heroRequest, new RestToXContentListener<HeroResponse>(channel))]
+    RestHeroAction->GET [client.admin().cluster().execute(HeroAction.INSTANCE, heroNodesRequest, new RestToXContentListener<HeroResponse>(channel))]
 
 # 步骤二：
     找到HeroPlugin注册的处理方法TransportNodesHeroAction并进行调用执行

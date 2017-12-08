@@ -1,9 +1,9 @@
 package com.demo.rest;
 
 import com.demo.action.HeroAction;
-import com.demo.action.HeroRequest;
-import com.demo.action.HeroRequestBuilder;
-import com.demo.action.HeroResponse;
+import com.demo.action.HeroNodesRequest;
+import com.demo.action.HeroNodesRequestBuilder;
+import com.demo.action.HeroNodesResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
@@ -42,9 +42,9 @@ public class RestHeroAction extends BaseRestHandler {
                 String name = request.param("name");
                 String sex = request.param("sex");
 
-                HeroRequestBuilder heroRequestBuilder = new HeroRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
-                HeroRequest heroRequest = heroRequestBuilder.request();
-                client.admin().cluster().execute(HeroAction.INSTANCE, heroRequest, new RestToXContentListener<HeroResponse>(channel));
+                HeroNodesRequestBuilder heroNodesRequestBuilder = new HeroNodesRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
+                HeroNodesRequest heroNodesRequest = heroNodesRequestBuilder.request();
+                client.admin().cluster().execute(HeroAction.INSTANCE, heroNodesRequest, new RestToXContentListener<HeroNodesResponse>(channel));
             } catch (Throwable ex) {
                 logger.error(ex.getMessage(), ex);
                 try {
@@ -64,9 +64,9 @@ public class RestHeroAction extends BaseRestHandler {
                 String name = request.param("name");
                 String sex = request.param("sex");
 
-                HeroRequestBuilder heroRequestBuilder = new HeroRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
-                HeroRequest heroRequest = heroRequestBuilder.request();
-                client.admin().cluster().execute(HeroAction.INSTANCE, heroRequest, new RestToXContentListener<HeroResponse>(channel));
+                HeroNodesRequestBuilder heroNodesRequestBuilder = new HeroNodesRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
+                HeroNodesRequest heroNodesRequest = heroNodesRequestBuilder.request();
+                client.admin().cluster().execute(HeroAction.INSTANCE, heroNodesRequest, new RestToXContentListener<HeroNodesResponse>(channel));
             } catch (Throwable ex) {
                 logger.error(ex.getMessage(), ex);
                 try {
@@ -86,9 +86,9 @@ public class RestHeroAction extends BaseRestHandler {
                 String name = request.param("name");
                 String sex = request.param("sex");
 
-                HeroRequestBuilder heroRequestBuilder = new HeroRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
-                HeroRequest heroRequest = heroRequestBuilder.request();
-                client.admin().cluster().execute(HeroAction.INSTANCE, heroRequest, new RestToXContentListener<HeroResponse>(channel));
+                HeroNodesRequestBuilder heroNodesRequestBuilder = new HeroNodesRequestBuilder(client.admin().cluster()).setName(name).setSex(sex);
+                HeroNodesRequest heroNodesRequest = heroNodesRequestBuilder.request();
+                client.admin().cluster().execute(HeroAction.INSTANCE, heroNodesRequest, new RestToXContentListener<HeroNodesResponse>(channel));
             } catch (Throwable ex) {
                 logger.error(ex.getMessage(), ex);
                 try {
