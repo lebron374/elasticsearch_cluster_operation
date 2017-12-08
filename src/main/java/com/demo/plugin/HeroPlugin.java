@@ -8,7 +8,9 @@ import org.elasticsearch.action.ActionModule;
 import org.elasticsearch.common.component.LifecycleComponent;
 import org.elasticsearch.common.inject.Module;
 import org.elasticsearch.plugins.AbstractPlugin;
+import org.elasticsearch.rest.RestModule;
 import org.elasticsearch.script.ScriptModule;
+import org.elasticsearch.search.highlight.HighlightModule;
 
 import java.util.Collection;
 
@@ -29,11 +31,14 @@ public class HeroPlugin extends AbstractPlugin {
         module.registerAction(HeroAction.INSTANCE, TransportNodesHeroAction.class);
     }
 
-//    public void onModule(RestModule module) {
-//        module.addRestAction(RestHeroAction.class);
-//    }
+    public void onModule(RestModule module) {
+    }
 
     public void onModule(ScriptModule module) {
+
+    }
+
+    public void onModule(HighlightModule module) {
 
     }
 
