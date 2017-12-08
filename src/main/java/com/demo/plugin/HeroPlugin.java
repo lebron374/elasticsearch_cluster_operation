@@ -27,6 +27,11 @@ public class HeroPlugin extends AbstractPlugin {
         return "hero";
     }
 
+    /**
+     * onModule接口在InternalNode.setup()接口中初始化
+     * onModule接口在InternalNode.start中的injector = modules.createInjector();进行初始化
+     * @param module
+     */
     public void onModule(ActionModule module) {
         module.registerAction(HeroAction.INSTANCE, TransportNodesHeroAction.class);
     }
@@ -42,11 +47,22 @@ public class HeroPlugin extends AbstractPlugin {
 
     }
 
+    /**
+     * onModule接口在InternalNode的start进行启动
+     * for (Class<? extends LifecycleComponent> plugin : pluginsService.services()) {
+     * injector.getInstance(plugin).start();
+     * }
+     * @return
+     */
     @Override
     public Collection<Class<? extends LifecycleComponent>> services() {
         return super.services();
     }
 
+    /**
+     * modules接口在InternalNode的setup的modules.add(new PluginsModule(settings, pluginsService))加载
+     * @return
+     */
     @Override
     public Collection<Class<? extends Module>> modules() {
         Collection<Class<? extends Module>> modules = Lists.newArrayList();
