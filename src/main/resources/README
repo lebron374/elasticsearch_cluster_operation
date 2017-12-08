@@ -1,0 +1,29 @@
+# 执行过程分析
+# 步骤一：
+    执行rest对应的接口，关注RestToXContentListener这个类组装返回结果
+    RestHeroAction->GET [client.admin().cluster().execute(HeroAction.INSTANCE, heroRequest, new RestToXContentListener<HeroResponse>(channel))]
+
+# 步骤二：
+    找到HeroPlugin注册的处理方法TransportNodesHeroAction并进行调用执行
+    [module.registerAction(HeroAction.INSTANCE, TransportNodesHeroAction.class);]
+    NodeClusterAdminClient->execute[TransportAction<Request, Response> transportAction = actions.get((ClusterAction)action);]
+
+# 步骤三：
+
+    继承说明：
+    TransportNodesHeroAction -> TransportNodesOperationAction -> TransportAction [A->B 表示A继承B]
+    RestToXContentListener -> RestResponseListener -> RestActionListener -> ActionListener
+
+    调用链说明
+    TransportAction的execute()
+    -> TransportNodesOperationAction的doExecute(request, listener)
+    -> TransportNodesOperationAction的AsyncAction(request, listener).start()
+    -> TransportNodesHeroAction的nodeOperation()[区分local/remote等场景]
+    -> TransportNodesOperationAction->onOperation(协调节点等待所有节点结束任务)
+    -> TransportNodesOperationAction的finishHim(开始执行任务完成步骤)
+    -> TransportNodesHeroAction的newResponse(返回所有节点内容)
+    -> RestActionListener的onResponse(处理所有节点返回内容格式)
+    -> RestResponseListener的RestToXContentListener
+    -> RestToXContentListener的buildResponse(组装返回参数内容)
+    -> HeroResponse的toXContent(真正组织返回格式的内容)
+    -> 通过chanel返回给访问端
