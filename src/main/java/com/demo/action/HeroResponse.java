@@ -10,14 +10,13 @@ import org.elasticsearch.common.xcontent.XContentBuilder;
 import java.io.IOException;
 
 /**
- * 负责在cluster模式下协调节点从各个节点读取数据
+ * 负责在cluster模式下整个集群的response数据
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroResponse extends NodesOperationResponse<HeroInfo> implements ToXContent {
 
     HeroResponse() {
     }
-
 
     @Override
     public void readFrom(StreamInput in) throws IOException {

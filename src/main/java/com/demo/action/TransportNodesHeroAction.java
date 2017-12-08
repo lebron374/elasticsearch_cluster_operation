@@ -46,15 +46,15 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
     @Override
     protected HeroResponse newResponse(HeroRequest request, AtomicReferenceArray nodesResponses) {
 
-        final List<HeroInfo> nodesInfos = new ArrayList<>();
+        final List<HeroInfo> heroInfos = new ArrayList<>();
         for (int i=0; i<nodesResponses.length(); i++) {
             Object resp = nodesResponses.get(i);
             if (resp instanceof HeroInfo) {
-                nodesInfos.add((HeroInfo) resp);
+                heroInfos.add((HeroInfo) resp);
             }
         }
 
-        return new HeroResponse(clusterName, nodesInfos.toArray(new HeroInfo[nodesInfos.size()]));
+        return new HeroResponse(clusterName, heroInfos.toArray(new HeroInfo[heroInfos.size()]));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
     }
 
     /**
-     * 执行节点真正执行任务的位置
+     * 执行节点真正执行任务的位置,真正发起执行在父类当中，有点模板类的执行模式
      * @param request
      * @return
      * @throws ElasticsearchException
@@ -98,7 +98,7 @@ public class TransportNodesHeroAction extends TransportNodesOperationAction<Hero
     }
 
     /**
-     * 内部类，功能需要进一步梳理
+     * 内部类，具体作用不明确，目前看只是针对HeroRequest进行了一层封装而已
      */
     static class HeroOperationRequest extends NodeOperationRequest {
         private HeroRequest request;

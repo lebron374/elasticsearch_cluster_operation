@@ -7,7 +7,7 @@ import org.elasticsearch.common.io.stream.StreamOutput;
 import java.io.IOException;
 
 /**
- * 协调节点往执行节点发送的请求
+ * 负责在cluster模式下整个集群的request数据
  * Created by zhi.wang on 2017/12/6.
  */
 public class HeroRequest extends NodesOperationRequest<HeroRequest> {

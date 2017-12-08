@@ -8,7 +8,7 @@ import org.elasticsearch.common.io.stream.StreamOutput;
 import java.io.IOException;
 
 /**
- * 负责在cluster模式下搭建实际数据存储对象
+ * 负责在cluster模式下每个节点的的响应
  * 需要实现readFrom/writeTo核心接口，猜测是用于传输序列化的时候使用
  * Created by zhi.wang on 2017/12/6.
  */
