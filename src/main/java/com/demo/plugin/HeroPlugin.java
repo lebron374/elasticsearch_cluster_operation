@@ -3,6 +3,7 @@ package com.demo.plugin;
 import com.demo.action.HeroAction;
 import com.demo.action.TransportNodesHeroAction;
 import com.demo.module.HeroModule;
+import com.demo.script.HeroScript;
 import com.google.common.collect.Lists;
 import org.elasticsearch.action.ActionModule;
 import org.elasticsearch.common.component.LifecycleComponent;
@@ -40,7 +41,7 @@ public class HeroPlugin extends AbstractPlugin {
     }
 
     public void onModule(ScriptModule module) {
-
+        module.registerScript(HeroScript.SCRIPT_NAME, HeroScript.class);
     }
 
     public void onModule(HighlightModule module) {
